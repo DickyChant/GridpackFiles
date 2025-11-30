@@ -1,0 +1,139 @@
+{
+    "paths": {
+        "cards_dir": "Cards",
+        "campaigns_dir": "Campaigns",
+        "fragments_dir": "Fragments",
+        "misc_dir": "Misc",
+        "validation_dir": "Validation",
+        "skeletons_dir": "Misc/Skeletons",
+        "eos_base_path": "/eos/cms/store/group/phys_generator/cvmfs/gridpacks/PdmV"
+    },
+    "generators": {
+        "MadGraph5_aMCatNLO": {
+            "description": "MadGraph5_aMC@NLO generator",
+            "skeleton_files": [
+                "skeleton.json",
+                "skeleton_madspin_card.dat",
+                "skeleton_proc_card.dat"
+            ],
+            "external_lhe_producer": "Generator/ExternalLHEProducer_MadGraph5_aMCatNLO.dat"
+        },
+        "Powheg": {
+            "description": "Powheg generator",
+            "skeleton_files": [],
+            "external_lhe_producer": "Generator/ExternalLHEProducer_Powheg.dat"
+        }
+    },
+    "physics_processes": [
+        "DY",
+        "GJ",
+        "GenVal",
+        "HH",
+        "NewTests",
+        "Others",
+        "QCD",
+        "SingleT",
+        "TT",
+        "VBF",
+        "W",
+        "WW",
+        "WZ",
+        "Z",
+        "ZZ"
+    ],
+    "campaigns": {
+        "Run3Summer22": {
+            "chain": "chain_Run3Summer22wmLHEGS_flowRun3Summer22DRPremix_flowRun3Summer22MiniAOD_flowRun3Summer22NanoAOD",
+            "tune": "CP5",
+            "beam": 6800,
+            "prepid_header": "GEN-Run3Summer22wmLHEGS"
+        },
+        "Run3Summer23": {
+            "chain": "chain_Run3Summer23wmLHEGS_flowRun3Summer23DRPremix_flowRun3Summer23MiniAOD_flowRun3Summer23NanoAOD",
+            "tune": "CP5",
+            "beam": 6800,
+            "prepid_header": "GEN-Run3Summer23wmLHEGS"
+        },
+        "Run3Winter22": {
+            "tune": "CP5",
+            "beam": 6800
+        },
+        "RunIII2024Summer24": {
+            "tune": "CP5",
+            "beam": 6800
+        },
+        "RunIISummer20UL16": {
+            "tune": "CP5",
+            "beam": 6500
+        }
+    },
+    "tunes": {
+        "CUEP": "Configuration.Generator.Pythia8CUEP8M1Settings_cfi",
+        "CP2": "Configuration.Generator.MCTunes2017.PythiaCP2Settings_cfi",
+        "CP5": "Configuration.Generator.MCTunesRun3ECM13p6TeV.PythiaCP5Settings_cfi",
+        "CP5TuneUp": "Configuration.Generator.MCTunesRun3ECM13p6TeV.PythiaCP5TuneUpSettings_cfi",
+        "CP5TuneDown": "Configuration.Generator.MCTunesRun3ECM13p6TeV.PythiaCP5TuneDownSettings_cfi"
+    },
+    "parton_showers": {
+        "amcatnlo-pythia8": {
+            "file": "PartonShower/amcatnlo-pythia8.dat",
+            "description": "aMC@NLO + Pythia8"
+        },
+        "amcatnloFXFX-pythia8": {
+            "file": "PartonShower/amcatnloFXFX-pythia8.dat",
+            "description": "aMC@NLO FxFx merging + Pythia8"
+        },
+        "madgraph-pythia8": {
+            "file": "PartonShower/madgraph-pythia8.dat",
+            "description": "MadGraph LO + Pythia8"
+        },
+        "madgraphMLM-pythia8": {
+            "file": "PartonShower/madgraphMLM-pythia8.dat",
+            "description": "MadGraph MLM matching + Pythia8"
+        },
+        "madgraphMLM-pythia8-hepmcfilter": {
+            "file": "PartonShower/madgraphMLM-pythia8-hepmcfilter.dat",
+            "description": "MadGraph MLM matching + Pythia8 + HepMC filter"
+        },
+        "PowhegEmissionVetoPythia8": {
+            "file": "PartonShower/PowhegEmissionVetoPythia8.dat",
+            "description": "Powheg emission veto + Pythia8"
+        }
+    },
+    "filters": {
+        "lepton_filters": [
+            "AtLeastOneE.dat",
+            "AtLeastOneLepton.dat",
+            "AtLeastOneMu.dat",
+            "AtLeastOneTau.dat",
+            "OneLepton.dat"
+        ],
+        "lhe_filters": [
+            "GEN_MuEl_MinPt15_filter.dat",
+            "LHE_B_EQ0_filter.dat",
+            "LHE_Dilepton_M4to10_filter.dat"
+        ]
+    },
+    "dataset_schema": {
+        "mandatory_attributes": {
+            "fragment": "string or list"
+        },
+        "optional_attributes": {
+            "model_params": "string",
+            "template": "string",
+            "model_params_vars": "dict",
+            "model_params_user": "list",
+            "template_vars": "dict",
+            "template_user": "list",
+            "fragment_vars": "dict",
+            "fragment_user": "list",
+            "gridpack_path": "string",
+            "gridpack_submit": "string"
+        }
+    },
+    "validation": {
+        "default_nevents": 400,
+        "nevents_gensim_range": [300, 1000],
+        "nevents_gen_range": [5000, 10000]
+    }
+}
