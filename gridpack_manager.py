@@ -93,12 +93,22 @@ def validate_config(config):
         if key not in config:
             errors.append(f"Missing required key: {key}")
     
-    # Validate paths
+    # Validate paths - check all paths used by functions
     if 'paths' in config:
-        required_paths = ['cards_dir', 'campaigns_dir', 'fragments_dir']
+        required_paths = ['cards_dir', 'campaigns_dir', 'fragments_dir', 'skeletons_dir', 'eos_base_path']
         for path_key in required_paths:
             if path_key not in config['paths']:
                 errors.append(f"Missing required path: {path_key}")
+    
+    # Validate dataset_schema has required structure
+    if 'dataset_schema' in config:
+        schema = config['dataset_schema']
+        if 'mandatory_attributes' not in schema:
+            errors.append("dataset_schema missing 'mandatory_attributes'")
+        if 'optional_attributes' not in schema:
+            errors.append("dataset_schema missing 'optional_attributes'")
+    else:
+        errors.append("Missing dataset_schema in config")
     
     # Validate generators have required fields
     if 'generators' in config:
@@ -191,7 +201,8 @@ def make_cards(config, generator, process, dataset_name, doit=False):
             with open(src) as f:
                 content = f.read()
             
-            # Replace placeholder with dataset name
+            # Replace $process placeholder with dataset name
+            # (legacy naming from original skeleton files)
             content = content.replace('$process', dataset_name)
             
             with open(dst, 'w') as f:
@@ -204,7 +215,15 @@ def make_cards(config, generator, process, dataset_name, doit=False):
 
 def check_cards(config):
     """Validate all card JSON files."""
+    if 'dataset_schema' not in config:
+        print("ERROR: Missing dataset_schema in config")
+        return False
+    
     schema = config['dataset_schema']
+    if 'mandatory_attributes' not in schema or 'optional_attributes' not in schema:
+        print("ERROR: dataset_schema missing required keys")
+        return False
+    
     mandatory_keys = set(schema['mandatory_attributes'].keys())
     optional_keys = set(schema['optional_attributes'].keys())
     
